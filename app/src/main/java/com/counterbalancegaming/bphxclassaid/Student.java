@@ -1,79 +1,106 @@
 package com.counterbalancegaming.bphxclassaid;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-
 /**
  * Created by Nicholas on 3/13/2018.
  */
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Student {
-    private String name;
-    private ArrayList<String> date = new ArrayList<String>();
-    private ArrayList<Boolean> absent = new ArrayList<Boolean>();
-    private ArrayList<Boolean> homework = new ArrayList<>();
-    private ArrayList<Boolean> participation = new ArrayList<>();
-    private ArrayList<Boolean> exitTicket = new ArrayList<>();
-    private int seat;
-    private int studentClassID;
+    private String firstName;
+    private String lastName;
+    private String studentID;
+    private HashMap<Integer, Data> studentData = new HashMap<Integer, Data>();
 
-
-    //Constructors
-
-    public Student(String newName, int newSeat){
-        setName(newName);
-        setSeat(newSeat);
+    public Student(String first, String last, String id) {
+        setFirstName(first);
+        setLastName(last);
+        setID(id);
     }
 
-    public void startDay(){
-
-        newDay();
-        newAbsent();
-        newHomework();
-        newParticipation();
-        newExitTicket();
+    public void newDay(int day, int month, int year) {
+        int dateKey = Integer.parseInt(""+ year + month + day);
+        Data dateData = new Data();
+        studentData.put(dateKey, dateData);
     }
 
-    private void newDay(){
-        Date c = Calendar.getInstance().getTime();
-        SimpleDateFormat df = new SimpleDateFormat("dd-MM-yyyy");
-        String formattedDate = df.format(c);
-        date.add(formattedDate);
+    public void absent(int year, int month, int day) {
+        int dateKey = Integer.parseInt(""+ year + month + day);
+        if(studentData.containsKey(dateKey)) {
+            Data editData = studentData.get(dateKey);
+            editData.absentToTrue();
+            studentData.put(dateKey, editData);
+        }
     }
 
-    private void newAbsent(){
-        absent.add(false);
+    public void homework(int day, int month, int year) {
+        int dateKey = Integer.parseInt(""+ year + month + day);
+        if(studentData.containsKey(dateKey)) {
+            Data editData = studentData.get(dateKey);
+            editData.homeworkToTrue();
+            studentData.put(dateKey, editData);
+        }
     }
 
-    private void newHomework(){
-        homework.add(false);
+    public void participation(int day, int month, int year) {
+        int dateKey = Integer.parseInt(""+ year + month + day);
+        if(studentData.containsKey(dateKey)) {
+            Data editData = studentData.get(dateKey);
+            editData.participationToTrue();
+            studentData.put(dateKey, editData);
+        }
     }
 
-    private void newParticipation(){
-        participation.add(false);
+    public void ticket(int day, int month, int year) {
+        int dateKey = Integer.parseInt(""+ year + month + day);
+        if(studentData.containsKey(dateKey)) {
+            Data editData = studentData.get(dateKey);
+            editData.ticketToTrue();
+            studentData.put(dateKey, editData);
+        }
     }
 
-    private void newExitTicket(){
-        exitTicket.add(false);
+    public String printData() {
+
+        String s = "";
+        for(Map.Entry<Integer, Data> entry : studentData.entrySet()) {
+            Integer key = entry.getKey();
+            Data value = entry.getValue();
+
+
+            s = s + ""+key+" "+ value.getAbsentAsString()+" "+value.getHomeworkAsString()+ " "+value.getParticipationAsString()+" "+value.getTicketAsString()+"\n";
+
+
+        }
+
+        return s;
     }
 
-    //Mutators
 
-    //Setters
 
-    private void setName(String setName){
-        this.name = setName;
+
+    public String getFirstName() {
+        return this.firstName;
     }
 
-    private void setSeat(int setSeat) {
-        this.seat = setSeat;
+    public String getLastName() {
+        return this.lastName;
     }
 
-    //Getters
+    private void setFirstName (String first) {
+        this.firstName = first;
+    }
 
-    private int getSeat(){
-        return this.seat;
+    private void setLastName (String last) {
+        this.lastName = last;
+    }
+
+    private void setID (String id) {
+        this.studentID = id;
+    }
+
+    public int getDataSize() {
+        return studentData.size();
     }
 }

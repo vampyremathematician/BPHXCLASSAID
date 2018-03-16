@@ -9,6 +9,7 @@ package com.counterbalancegaming.bphxclassaid;
 import android.content.Context;
 import android.support.v4.view.GestureDetectorCompat;
 import android.view.GestureDetector;
+
 import android.view.MotionEvent;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 /**
      * Created by Rob on 3/13/2018.
      */
-
+/**
     public class SwipeView extends android.support.v7.widget.AppCompatTextView implements GestureDetector.OnGestureListener {
         private GestureDetectorCompat mDetector;
         public SwipeView(Context context) {
@@ -72,3 +73,4 @@ import android.widget.TextView;
         }
     }
 }
+*/
